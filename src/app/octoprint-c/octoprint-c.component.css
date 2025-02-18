@@ -1,0 +1,12 @@
+.body {
+    display: grid;
+    place-items: center;
+}
+
+.info {
+    display: grid;
+    place-items: center;
+    background-color: #2D3748;
+    color: white;
+    letter-spacing: 2px;
+}

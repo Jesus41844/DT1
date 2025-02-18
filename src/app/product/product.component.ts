@@ -8,7 +8,7 @@ import { PaymentComponent } from "../payment-form/payment-form.component";
   selector: 'AppProduct', //Selector del componente
   imports:
     [PaymentComponent, //Importa el componente del formulario de pago
-    CommonModule //Importa CommonModule para funcionalidades comunes de Angular
+    CommonModule, //Importa CommonModule para funcionalidades comunes de Angular
   ],
   templateUrl: './product.component.html', //Ruta al HTML del componente
   styleUrl: './product.component.css' //Ruta a los estilos CSS del componente

@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@square/web-sdk": "^2.0.1",
     "body-parser": "^1.20.3",
     "express": "^4.21.2",
     "square": "^39.0.0",

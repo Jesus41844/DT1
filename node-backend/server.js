@@ -1,12 +1,20 @@
 //Importa dependencias necesarias
-const express = require('express');
 const { Client, Environment } = require('square');
+const express = require('express');
+const cors = require('cors');
 const app = express();
 app.use(express.json()); // Middleware para parsear el cuerpo de las solicitudes JSON
 
+app.use((req, res, next) => {
+  res.append('Access-Control-Allow-Origin', ['*']);
+  res.append('Access-Control-Allow-methods', 'GET, PUT, POST, DELETE');
+  res.append('Access-Control-Allow-Headers', 'Content-type');
+  next()
+})
+
 // Configura el cliente de Square con el token de acceso y el entorno de sandbox
 const client = new Client({
-  accessToken: process.env.SQUARE_ACCESS_TOKEN,
+  accessToken: process.env.EAAAl8tker929BBMW6o-ispHbvPFh0BE21La25hhXXMwPIOIvBDPGqC18ALhFnU1,
   environment: Environment.Sandbox,
 });
 

@@ -2,27 +2,17 @@
 <body>
     <nav class="navbar">
         <!--Barra de navegacion de la pagina principal-->
-        <mat-toolbar>
-            <div class="FabLabWLogo"><!--Logo del FabLab-->
-                <img class="logo" src="https://fablab.utp.ac.pa/wp-content/uploads/2022/02/fablab_nav_logo.svg" alt="Logo" width="50">
-                <div class="FabLab"><!--Titulo y descripcion del FabLab-->
-                    <p class="title">FAB LAB UTP</p>
-                    <p class="descripcion">Centro de Fabricación para la Innovación Tecnológica</p>
-                </div>
-            </div><!--Botones de navegacion-->
-            <button mat-button>Inicio</button>
-            <button mat-button>Sobre Nosotros</button>
-            <button mat-button>Productos</button>
-            <button mat-button>Eventos</button>
-            <button mat-button>Equipos</button>
-            <button mat-button>Proyectos</button>
-            <button mat-button>Contactanos</button>
-        </mat-toolbar>
+        <div class="FabLabWLogo"><!--Logo del FabLab-->
+            <img class="logo" src="https://fablab.utp.ac.pa/wp-content/uploads/2022/02/fablab_nav_logo.svg" alt="Logo" width="50">
+            <div class="FabLab"><!--Titulo y descripcion del FabLab-->
+                <p class="title">FAB LAB UTP</p>
+            </div>
+        </div>
+        <p class="descripcion">Sistema de impresion</p>
     </nav>
-    <div><!--Muestra el componente AppProduct para mostrar los productos-->
-        <section class="contenedor"><!-- Para agregar más productos, añade otro <AppProduct> con las modificaciones necesarias para el nombre y precio -->
-            <AppProduct [name]='product.name' [price]="product.price" class="product"></AppProduct>
-        </section>
+    <div class="contenedor_comp"><!--Muestra el componente AppProduct para mostrar los productos-->
+        <app-octoprint-c></app-octoprint-c>
+        <PaymentComponent></PaymentComponent>
     </div>
     <router-outlet /><!-- Router outlet para la navegación -->
 </body>
