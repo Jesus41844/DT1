@@ -1,6 +1,9 @@
-const { contextBridge, ipcRenderer } = require('electron');
-const square = require('@square/web-sdk');  // Carga el SDK de Square aquí
+const { contextBridge, exposeInMainWorld, ipcRenderer } = require('electron');
+const square = require('@square');  // Carga el SDK de Square aquí
 
+console.log('Preload script cargado');
 contextBridge.exposeInMainWorld('squareAPI', {
-    loadSquare: () => square('EAAAl8tker929BBMW6o-ispHbvPFh0BE21La25hhXXMwPIOIvBDPGqC18ALhFnU1')
+    loadSquare: () => {
+        return ipcRenderer.invoke('load-square')
+    }    
 });

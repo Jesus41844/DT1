@@ -1,13 +1,7 @@
 // Importaciones necesarias para el componente
 import { Component, OnInit } from '@angular/core';
-
-declare global {
-  interface Window {
-    squareAPI: {
-      loadSquare: () => Promise<any>;
-    };
-  }
-}
+import { PaymentService } from '../payment.service';
+import * as Square from '@square/web-sdk';
 
 // Decorador @Component que define el componente PaymentComponent
 @Component({
@@ -17,14 +11,37 @@ declare global {
 })
 
 export class PaymentComponent implements OnInit{
-  //Metodo que se ejecuta al inicializar el componente
-  async ngOnInit() {// Inicializa la instancia de pagos con el ID del sandbox de Square
+  constructor(private paymentService: PaymentService) {}
+  async ngOnInit() {
     try {
-      const square = await window.squareAPI.loadSquare();
-      // Ahora puedes usar el SDK de Square
+      const square = await Square.load();
       console.log('Square SDK cargado:', square);
-    } catch (error) {
-      console.error("Error: ", error);
+      
+      // Configura el formulario de pago
+      const paymentForm = square.paymentForm({
+      applicationId: 'sandbox-sq0idb-dYndKND591Z6jhejKXTqwQ',
+      locationId: 'L1QS66BTSVSA9',
+      inputClass: 'sq-input',
+      callbacks: {
+        cardNonceResponseReceived: (errors, nonce) => {
+          if (errors) {
+            console.error('Error al generar el nonce:', errors);
+            return;
+          }
+
+          // Envía el nonce al backend para procesar el pago
+          this.paymentService.processPayment(nonce, 1000) // $10.00 = 1000 centavos
+            .subscribe(
+              (response) => console.log('Pago exitoso:', response),
+              (error) => console.error('Error al procesar el pago:', error)
+            );
+        }
+      }
+    });
+
+    paymentForm.build();
+  } catch (error) {
+    console.error('Error al cargar el SDK de Square:', error);
   }
-  }
+}
 }

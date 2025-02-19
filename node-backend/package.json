@@ -13,8 +13,7 @@
     "@square/web-sdk": "^2.0.1",
     "body-parser": "^1.20.3",
     "express": "^4.21.2",
-    "square": "^39.0.0",
-    "stripe": "^17.4.0"
+    "square": "^40.0.0"
   },
   "description": ""
 }

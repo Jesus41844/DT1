@@ -3,6 +3,7 @@ const { Client, Environment } = require('square');
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const crypto = require('crypto');
 app.use(express.json()); // Middleware para parsear el cuerpo de las solicitudes JSON
 
 app.use((req, res, next) => {
@@ -14,7 +15,7 @@ app.use((req, res, next) => {
 
 // Configura el cliente de Square con el token de acceso y el entorno de sandbox
 const client = new Client({
-  accessToken: process.env.EAAAl8tker929BBMW6o-ispHbvPFh0BE21La25hhXXMwPIOIvBDPGqC18ALhFnU1,
+  accessToken: 'EAAAl8tker929BBMW6o-ispHbvPFh0BE21La25hhXXMwPIOIvBDPGqC18ALhFnU1',
   environment: Environment.Sandbox,
 });
 
@@ -26,7 +27,7 @@ app.post('/process-payment', async (req, res) => {
   const { nonce, amount } = req.body; // Extrae el nonce y el monto del cuerpo de la solicitud
 
   try { //Crea un pago utilizando la API de Square
-    const response = await paymentsApi.createPayment({
+    const response = await client.paymentsApi.createPayment({
       sourceId: nonce, //ID de la fuente de pago (nonce)
       amountMoney: {
         amount: amount, //Monto del pago en centavos
@@ -35,9 +36,10 @@ app.post('/process-payment', async (req, res) => {
       idempotencyKey: new Date().getTime().toString(), // Clave de idempotencia para evitar pagos duplicados
     });
 
-    res.status(200).json(response.result); //Responde con el resultado del pago
+    res.json({ success: true, payment: response.result.payment });
   } catch (error) {
-    res.status(500).json(error); //Maneja los errores y responde con un estado 500
+    console.error('Error al procesar el pago:', error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
